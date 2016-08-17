@@ -5,16 +5,15 @@ from django.http import Http404
 from .serializers import *
 from .models import *
 
-# Create your views here.
+
 class ReminderViewSet(generics.ListCreateAPIView):
     serializer_class = ReminderSerializer
 
     def post(self, request, format=None):
-        print(request.data)
         serializer = ReminderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def get_queryset(self):

@@ -11,10 +11,8 @@ def send_reminder_mail(email, message, id):
     reminder = Reminder.objects.get(id=id)
     try:
         send_mail(subject, message, 'tir.karthi@gmail.com', recipients)
-        print("Chnaging state", id, Reminder.STATE_SENT)
-        reminder.state = Reminder.STATE_SENT
+        reminder.status = Reminder.STATE_SENT
     except e:
-        print("Exception occurred", id)
-        reminder.state = Reminder.STATE_FAILED
+        reminder.status = Reminder.STATE_FAILED
     finally:
         reminder.save()
