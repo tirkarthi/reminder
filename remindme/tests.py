@@ -7,12 +7,15 @@ import datetime
 
 from .models import Reminder
 
+
 class AccountTests(APITestCase):
+
     def test_create_reminder(self):
         """
         Ensure we can create a new Reminder object.
         """
-        data = {'email' : 'xtre@yopmail.com', 'message' : 'Buy Milk', 'time' : timezone.now() + datetime.timedelta(seconds=30) }
+        data = {'email': 'xtre@yopmail.com', 'message': 'Buy Milk',
+                'time': timezone.now() + datetime.timedelta(seconds=30)}
         url = reverse('reminder-list')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -23,7 +26,8 @@ class AccountTests(APITestCase):
         """
         Ensure we can delete a new Reminder object.
         """
-        data = {'email' : 'xtre@yopmail.com', 'message' : 'Buy Milk', 'time' : timezone.now() + datetime.timedelta(seconds=30) }
+        data = {'email': 'xtre@yopmail.com', 'message': 'Buy Milk',
+                'time': timezone.now() + datetime.timedelta(seconds=30)}
         url = reverse('reminder-list')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -33,12 +37,12 @@ class AccountTests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-
     def test_validate_time(self):
         """
         Ensure we can create a new Reminder object with valid email
         """
-        data = {'email' : 'xtre@yopmail,,com', 'message' : 'Buy Milk', 'time' : timezone.now() + datetime.timedelta(seconds=30) }
+        data = {'email': 'xtre@yopmail,,com', 'message': 'Buy Milk',
+                'time': timezone.now() + datetime.timedelta(seconds=30)}
         url = reverse('reminder-list')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -47,7 +51,8 @@ class AccountTests(APITestCase):
         """
         Ensure we can create a new Reminder object with time greater than the current time
         """
-        data = {'email' : 'xtre@yopmail.com', 'message' : 'Buy Milk', 'time' : timezone.now() - datetime.timedelta(seconds=30) }
+        data = {'email': 'xtre@yopmail.com', 'message': 'Buy Milk',
+                'time': timezone.now() - datetime.timedelta(seconds=30)}
         url = reverse('reminder-list')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -56,7 +61,8 @@ class AccountTests(APITestCase):
         """
         Ensure we have a message
         """
-        data = {'email' : 'xtre@yopmail,,com', 'message': '', 'time' : timezone.now() + datetime.timedelta(seconds=30) }
+        data = {'email': 'xtre@yopmail,,com', 'message': '',
+                'time': timezone.now() + datetime.timedelta(seconds=30)}
         url = reverse('reminder-list')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

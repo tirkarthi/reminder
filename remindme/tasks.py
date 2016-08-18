@@ -1,6 +1,7 @@
 from celery.decorators import task
 from django.core.mail import send_mail
 
+
 @task()
 def send_reminder_mail(email, message, id):
     from .models import Reminder

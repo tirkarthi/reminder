@@ -15,10 +15,11 @@ class ReminderViewSet(generics.ListCreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     def get_queryset(self):
         queryset = Reminder.objects.all().order_by('-time')
         return queryset
+
 
 class ReminderViewSetDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReminderSerializer
@@ -33,7 +34,7 @@ class ReminderViewSetDetail(generics.RetrieveUpdateDestroyAPIView):
         Reminder = self.get_object(pk)
         serializer = ReminderSerializer(Reminder)
         return Response(serializer.data)
-    
+
     def put(self, request, pk, format=None):
         reminder = self.get_object(pk)
         serializer = ReminderSerializer(reminder, data=request.data)
