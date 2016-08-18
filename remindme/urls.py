@@ -5,6 +5,7 @@ from .views import *
 
 
 urlpatterns = [
-        url(r'api/reminders/$', ReminderViewSet.as_view()),
-        url(r'api/reminders/(?P<pk>[0-9]+)$', ReminderViewSetDetail.as_view()),
+    url(r'api/reminders/$', ReminderViewSet.as_view(), name='reminder-list'),
+    url(r'api/reminders/(?P<pk>[0-9]+)$',
+        ReminderViewSetDetail.as_view(), name='reminder-detail'),
 ]
